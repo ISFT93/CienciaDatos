@@ -1,0 +1,70 @@
+/* =========================================
+   INFORMACIÓN
+========================================= */
+
+.titulo-seccion {
+    margin-bottom: 70px;
+}
+
+.titulo-seccion p {
+    color: var(--gris);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+}
+
+.info-texto h3 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.info-texto p {
+    color: var(--gris);
+    line-height: 1.9;
+    margin-bottom: 20px;
+}
+
+.contacto {
+    border-left: 1px solid var(--gris-oscuro);
+    padding-left: 50px;
+}
+
+.contacto-item {
+    padding: 25px 0;
+    border-bottom: 1px solid var(--gris-oscuro);
+}
+
+.contacto-item span {
+    display: block;
+    color: var(--azul);
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.contacto-item strong {
+    font-size: 15px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .contacto {
+        border-left: none;
+        border-top: 1px solid var(--gris-oscuro);
+        padding: 20px 0;
+    }
+
+}

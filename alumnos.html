@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alumnos | Ciencia de Datos</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="alumnos.css">
+</head>
+
+<body>
+
+    <!-- SITIO PRINCIPAL -->
+    <main class="web-principal visible">
+
+        <!-- BARRA DE NAVEGACIÓN -->
+        <header class="navbar">
+
+            <div class="logo">
+                <div class="logo-icon">UnSV</div>
+
+                <div>
+                    <strong>Ciencia de Datos</strong>
+                    <small>Curso 2026</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="inicio.html" class="nav-btn">
+                    Inicio
+                </a>
+
+                <a href="nosotros.html" class="nav-btn">
+                    Nosotros
+                </a>
+
+                <a href="alumnos.html" class="nav-btn activo">
+                    Alumnos
+                </a>
+
+                <a href="proyectos.html" class="nav-btn">
+                    Proyectos
+                </a>
+
+                <a href="informacion.html" class="nav-btn">
+                    Información
+                </a>
+
+            </nav>
+
+        </header>
+
+
+        <!-- CONTENIDO -->
+        <div class="contenido-principal">
+
+            <!-- ALUMNOS -->
+            <section id="alumnos" class="seccion activa">
+
+                <div class="titulo-seccion">
+
+                    <span class="numero">
+                        02 / ALUMNOS
+                    </span>
+
+                    <h2>
+                        Nuestros <span>alumnos.</span>
+                    </h2>
+
+                    <p>
+                        Conocé a quienes forman parte de nuestro curso.
+                    </p>
+
+                </div>
+
+
+                <!-- CARDS DE ALUMNOS -->
+                <div class="alumnos-grid">
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Alumno 01', 'AM', '11 1234-5678', 'alumno01@email.com')">
+
+                        <div class="avatar">AM</div>
+
+                        <h3>Alumno 01</h3>
+
+                        <p>Analítica de datos</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Alumno 02', 'AL', '11 2345-6789', 'alumno02@email.com')">
+
+                        <div class="avatar">AL</div>
+
+                        <h3>Alumno 02</h3>
+
+                        <p>Machine Learning</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Alumno 03', 'JP', '11 3456-7890', 'alumno03@email.com')">
+
+                        <div class="avatar">JP</div>
+
+                        <h3>Alumno 03</h3>
+
+                        <p>Visualización</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Alumno 04', 'MG', '11 4567-8901', 'alumno04@email.com')">
+
+                        <div class="avatar">MG</div>
+
+                        <h3>Alumno 04</h3>
+
+                        <p>Big Data</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Alumno 05', 'LC', '11 5678-9012', 'alumno05@email.com')">
+
+                        <div class="avatar">LC</div>
+
+                        <h3>Alumno 05</h3>
+
+                        <p>Programación</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Alumno 06', 'RS', '11 6789-0123', 'alumno06@email.com')">
+
+                        <div class="avatar">RS</div>
+
+                        <h3>Alumno 06</h3>
+
+                        <p>Estadística</p>
+
+                    </article>
+
+                </div>
+
+
+                <!-- TARJETA FLOTANTE DEL ALUMNO -->
+                <div id="modalAlumno" class="modal-alumno">
+
+                    <div class="tarjeta-alumno">
+
+                        <button
+                            class="cerrar-modal"
+                            onclick="cerrarAlumno()">
+                            ×
+                        </button>
+
+                        <img
+                            id="fotoAlumno"
+                            src=""
+                            alt="Foto del alumno">
+
+                        <h2 id="nombreAlumno">
+                            Nombre
+                        </h2>
+
+                        <p id="telefonoAlumno"></p>
+
+                        <p id="emailAlumno"></p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <span>
+                CIENCIA DE DATOS · CURSO 2026
+            </span>
+
+            <span>
+                DATOS · ANÁLISIS · INNOVACIÓN
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="alumnos.js"></script>
+
+</body>
+
+</html>

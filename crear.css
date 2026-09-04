@@ -1,0 +1,253 @@
+/* =========================================
+   CREAR
+========================================= */
+
+.pagina-contenido {
+    min-height: 100vh;
+    width: 88%;
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.pagina-header {
+    min-height: 220px;
+    padding: 70px 0 50px;
+    border-bottom: 1px solid var(--gris-oscuro);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.pagina-header .numero {
+    display: block;
+    margin-bottom: 25px;
+}
+
+.pagina-header h1 {
+    font-size: clamp(55px, 7vw, 100px);
+    line-height: .85;
+    margin: 0;
+}
+
+.pagina-header h1 span {
+    color: var(--azul);
+}
+
+
+/* =========================================
+   BOTÓN VOLVER
+========================================= */
+
+.volver {
+    color: var(--gris);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    padding: 12px 0;
+    border-bottom: 1px solid transparent;
+
+    transition: .3s;
+}
+
+.volver:hover {
+    color: var(--azul);
+    border-bottom-color: var(--azul);
+}
+
+
+/* =========================================
+   CONTENIDO
+========================================= */
+
+.contenido-pagina {
+    flex: 1;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+
+    align-items: center;
+
+    padding: 90px 0;
+}
+
+
+/* =========================================
+   TEXTO
+========================================= */
+
+.texto-pagina {
+    max-width: 650px;
+}
+
+.texto-pagina h2 {
+    font-size: clamp(30px, 4vw, 50px);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 35px;
+}
+
+.texto-pagina p {
+    color: var(--gris);
+    line-height: 1.9;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   GRÁFICO / FLUJO DE DATOS
+========================================= */
+
+.grafico-pagina {
+    min-height: 400px;
+    border: 1px solid var(--gris-oscuro);
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,217,255,.05),
+            transparent 65%
+        );
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 50px;
+
+    overflow: hidden;
+}
+
+.flujo {
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.flujo-item {
+    border: 1px solid var(--azul);
+
+    padding: 22px 25px;
+
+    color: var(--azul);
+
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    background: rgba(0,217,255,.02);
+
+    box-shadow: 0 0 20px rgba(0,217,255,.05);
+
+    transition: .3s;
+}
+
+.flujo-item:hover {
+    background: var(--azul);
+    color: var(--negro);
+    box-shadow: 0 0 30px rgba(0,217,255,.15);
+}
+
+.flujo > span {
+    color: var(--azul);
+    font-size: 25px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.pagina-contenido footer {
+    width: 100%;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .contenido-pagina {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        padding: 70px 0;
+    }
+
+    .grafico-pagina {
+        min-height: 350px;
+    }
+
+    .pagina-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pagina-header h1 {
+        font-size: 65px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .pagina-contenido {
+        width: 90%;
+    }
+
+    .pagina-header {
+        padding: 50px 0 40px;
+    }
+
+    .pagina-header h1 {
+        font-size: 50px;
+    }
+
+    .contenido-pagina {
+        padding: 50px 0;
+        gap: 45px;
+    }
+
+    .texto-pagina h2 {
+        font-size: 34px;
+    }
+
+    .texto-pagina p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .grafico-pagina {
+        min-height: 300px;
+        padding: 30px 15px;
+    }
+
+    .flujo {
+        gap: 12px;
+    }
+
+    .flujo-item {
+        padding: 18px 15px;
+        font-size: 9px;
+    }
+
+    .flujo > span {
+        font-size: 20px;
+    }
+
+}
