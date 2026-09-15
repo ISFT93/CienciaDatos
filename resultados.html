@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Resultados | Lactosuero
+    </title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <main class="resultados">
+
+        <!-- =====================================
+             ENCABEZADO
+        ====================================== -->
+
+        <header class="resultados-header">
+
+            <div class="resultados-superior">
+                <span>
+                    CIENCIA DE DATOS · CURSO 2026
+                </span>
+
+                <div class="acciones-resultados">
+
+                    <button
+                        type="button"
+                        id="btnDescargarPDF"
+                        class="btn-pdf"
+                    >
+                        ↓ DESCARGAR INFORME PDF
+                    </button>
+
+                    <a
+                        href="index.html"
+                        class="btn-volver"
+                    >
+                        ← VOLVER A LA ENCUESTA
+                    </a>
+
+                </div>
+            </div>
+
+
+            <h1>
+                Datos del<br>
+                <strong>establecimiento.</strong>
+            </h1>
+
+
+            <p>
+                Panel de resultados de las encuestas
+                sobre producción láctea y aprovechamiento
+                del lactosuero.
+            </p>
+
+        </header>
+
+
+        <!-- =====================================
+             RESUMEN GENERAL
+        ====================================== -->
+
+        <section class="resumen-resultados">
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    ENCUESTAS
+                </span>
+
+                <strong id="totalEncuestas">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    ESTABLECIMIENTOS
+                </span>
+
+                <strong id="totalEstablecimientos">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+                <span>GENERAN LACTOSUERO</span>
+
+                <div class="valor-resumen">
+
+                    <strong id="totalGeneranSuero">
+                        0
+                    </strong>
+
+                    <small id="porcentajeGeneranSuero">
+                        0%
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="tarjeta-resumen">
+
+                <span>
+                    LITROS DE SUERO / DÍA
+                </span>
+
+                <strong id="totalLitrosSuero">
+                    0
+                </strong>
+
+            </div>
+
+            <div class="tarjeta-resumen">
+                <span>PROMEDIO DE SUERO / DÍA</span>
+                <strong id="promedioLitrosSuero">0</strong>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <span>CAPACIDAD DE ALMACENAMIENTO</span>
+                <strong id="totalAlmacenamiento">0</strong>
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MENSAJE CUANDO NO HAY DATOS
+        ====================================== -->
+
+        <section
+            id="sinDatos"
+            class="sin-datos"
+            hidden
+        >
+
+            <h2>
+                No hay encuestas registradas.
+            </h2>
+
+            <p>
+                Completá al menos una encuesta para
+                comenzar a visualizar los resultados.
+            </p>
+
+            <a
+                href="index.html"
+                class="btn-volver"
+            >
+                ← VOLVER A LA ENCUESTA
+            </a>
+
+        </section>
+
+
+        <!-- =====================================
+             CONTENIDO DE RESULTADOS
+        ====================================== -->
+
+        <section
+            id="contenidoResultados"
+            class="contenido-resultados"
+        >
+
+            <div class="bloque-resultados">
+
+                <h2>
+                    Destino del lactosuero
+                </h2>
+
+                <p>
+                    Distribución porcentual de los destinos
+                    declarados para el lactosuero.
+                </p>
+
+
+                <div class="grafico-contenedor">
+
+                    <canvas id="graficoDestinos"></canvas>
+
+                </div>
+
+            </div>
+
+                <div class="bloque-resultados">
+
+                    <h2>
+                        Producción de lactosuero por establecimiento
+                    </h2>
+
+                    <p>
+                        Comparación de los litros de lactosuero generados
+                        aproximadamente por día.
+                    </p>
+
+                    <div class="grafico-contenedor">
+
+                        <canvas id="graficoProduccion"></canvas>
+
+                </div>
+
+            </div>
+
+            <div class="bloque-resultados">
+
+                <h2>
+                    Estacionalidad de la producción
+                </h2>
+
+                <p>
+                    Cantidad de establecimientos según el nivel
+                    de producción declarado para cada mes.
+                </p>
+
+                <div class="grafico-contenedor">
+
+                    <canvas id="graficoEstacionalidad"></canvas>
+
+                </div>
+
+            </div>
+
+            <div class="bloque-resultados">
+
+                <h2>
+                    Productos lácteos elaborados
+                </h2>
+
+                <p>
+                    Cantidad de establecimientos según los productos
+                    lácteos que elaboran.
+                </p>
+
+                <div class="grafico-contenedor">
+
+                    <canvas id="graficoProductos"></canvas>
+
+                </div>
+
+            </div>
+
+            <div class="bloque-resultados">
+
+                <h2>
+                    Establecimientos por localidad
+                </h2>
+
+                <p>
+                    Distribución de los establecimientos encuestados
+                    según su localidad.
+                </p>
+
+                <div class="grafico-contenedor">
+
+                    <canvas id="graficoLocalidades"></canvas>
+
+                </div>
+
+            </div>
+
+            <div class="bloque-resultados">
+
+                <h2>
+                    Producción vs. capacidad de almacenamiento
+                </h2>
+
+                <p>
+                    Comparación entre la generación diaria de lactosuero
+                    y la capacidad de almacenamiento refrigerado declarada.
+                </p>
+
+                <div class="grafico-contenedor">
+
+                    <canvas id="graficoProduccionAlmacenamiento"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =========================================
+            RESPUESTAS INDIVIDUALES
+        ========================================= -->
+
+        <section class="respuestas-individuales">
+
+            <div class="encabezado-respuestas">
+
+                <h2>
+                    Respuestas individuales
+                </h2>
+
+                <p>
+                    Consulta detallada de cada encuesta registrada.
+                </p>
+
+            </div>
+
+
+            <div
+                id="listaRespuestas"
+                class="lista-respuestas"
+            >
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="resultados.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="pdf.js"></script>
+
+</body>
+
+</html>
