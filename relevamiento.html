@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relevamiento | Ciencia de Datos</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="relevamiento.css">
+</head>
+
+<body>
+
+    <!-- SITIO PRINCIPAL -->
+    <main class="web-principal visible">
+
+        <!-- BARRA DE NAVEGACIÓN -->
+        <header class="navbar">
+
+            <div class="logo">
+                <div class="logo-icon">UnSV</div>
+
+                <div>
+                    <strong>Ciencia de Datos</strong>
+                    <small>Curso 2026</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="inicio.html" class="nav-btn">
+                    Inicio
+                </a>
+
+                <a href="nosotros.html" class="nav-btn">
+                    Nosotros
+                </a>
+
+                <a href="alumnos.html" class="nav-btn">
+                    Alumnos
+                </a>
+
+                <a href="proyectos.html" class="nav-btn">
+                    Proyectos
+                </a>
+
+                <a href="relevamiento.html" class="nav-btn activo">
+                    Relevamiento
+                </a>
+
+                <a href="informacion.html" class="nav-btn">
+                    Información
+                </a>
+
+            </nav>
+
+        </header>
+
+
+        <!-- CONTENIDO -->
+        <div class="contenido-principal">
+
+            <!-- RELEVAMIENTO -->
+            <section id="relevamiento" class="seccion activa">
+
+                <div class="titulo-seccion">
+
+                    <h2>
+                        Relevamiento de <span>Lactosuero.</span>
+                    </h2>
+
+                </div>
+
+
+                <div class="wizard" id="wizard-relevamiento">
+
+                    <!-- BARRA DE PROGRESO -->
+                    <div class="wizard-progreso">
+
+                        <div class="wizard-progreso-barra">
+                            <div class="wizard-progreso-relleno" id="wizard-progreso-relleno"></div>
+                        </div>
+
+                        <ol class="wizard-pasos" id="wizard-pasos">
+                            <li class="wizard-paso-item activo" data-paso="1">
+                                <span class="wizard-paso-num">01</span>
+                                <span class="wizard-paso-nombre">Identificación</span>
+                            </li>
+                            <li class="wizard-paso-item" data-paso="2">
+                                <span class="wizard-paso-num">02</span>
+                                <span class="wizard-paso-nombre">Producción</span>
+                            </li>
+                            <li class="wizard-paso-item" data-paso="3">
+                                <span class="wizard-paso-num">03</span>
+                                <span class="wizard-paso-nombre">Lactosuero</span>
+                            </li>
+                            <li class="wizard-paso-item" data-paso="4">
+                                <span class="wizard-paso-num">04</span>
+                                <span class="wizard-paso-nombre">Estacionalidad</span>
+                            </li>
+                            <li class="wizard-paso-item" data-paso="5">
+                                <span class="wizard-paso-num">05</span>
+                                <span class="wizard-paso-nombre">Infraestructura</span>
+                            </li>
+                        </ol>
+                    </div>
+
+
+                    <form id="form-relevamiento" class="form-relevamiento" novalidate>
+
+                        <!-- PASO 1 — IDENTIFICACIÓN -->
+                        <fieldset class="form-paso activo" data-paso="1">
+
+                            <div class="form-paso-titulo">
+                                <h3>Identificación del establecimiento</h3>
+                                <p>Datos generales que permiten ubicar y clasificar el establecimiento.</p>
+                            </div>
+
+                            <div class="campo">
+                                <label for="nombre-establecimiento">
+                                    Nombre del establecimiento
+                                </label>
+                                <input type="text" id="nombre-establecimiento" name="nombre_establecimiento"
+                                    placeholder="Ej: Napoli" required>
+                            </div>
+
+                            <div class="campo">
+                                <label for="tipo-establecimiento">
+                                    ¿Qué tipo de establecimiento es?
+                                </label>
+                                <select id="tipo-establecimiento" name="tipo_establecimiento" required>
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="fabrica">Fábrica láctea / quesería</option>
+                                    <option value="tambo">Tambo con elaboración propia</option>
+                                    <option value="cooperativa">Cooperativa</option>
+                                </select>
+                            </div>
+
+                            <div class="campo">
+                                <label for="localidad">
+                                    Localidad
+                                </label>
+                                <select id="localidad" name="localidad" required>
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="san-vicente">San Vicente</option>
+                                    <option value="domselaar">Domselaar</option>
+                                    <option value="alejandro-korn">Alejandro Korn</option>
+                                    <option value="otro" data-otro-toggle="otro-localidad">Otro</option>
+                                </select>
+                                <input type="text" class="input-otro" id="otro-localidad" name="localidad_otro"
+                                    placeholder="Especificar localidad" disabled hidden>
+                            </div>
+
+                            <div class="campo campo-ancho">
+                                <label for="direccion">
+                                    Ubicación / dirección
+                                </label>
+                                <div class="geoloc-container">
+                                    <input type="text" id="direccion" name="direccion"
+                                        placeholder="Ej: Ruta 210, Km 45">
+                                    <button type="button" id="btn-geolocalizacion" class="btn-geoloc">
+                                        📍 Compartir mi ubicación
+                                    </button>
+                                    <input type="hidden" id="coordenadas" name="coordenadas">
+                                    <span class="geoloc-estado" id="geoloc-estado" hidden></span>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+
+                        <!-- PASO 2 — PRODUCCIÓN -->
+                        <fieldset class="form-paso" data-paso="2">
+
+                            <div class="form-paso-titulo">
+                                <h3>Producción</h3>
+                                <p>Volumen y frecuencia de producción, y productos elaborados.</p>
+                            </div>
+
+                            <div class="campo campo-numerico">
+                                <label for="litros-leche-dia">
+                                    1. ¿Cuántos litros de leche procesa aproximadamente por día?
+                                </label>
+                                <div class="input-unidad">
+                                    <input type="number" id="litros-leche-dia" name="litros_leche_dia" min="0"
+                                        inputmode="decimal" placeholder="0" required>
+                                    <span class="unidad">litros/día</span>
+                                </div>
+                            </div>
+
+                            <div class="campo campo-numerico">
+                                <label for="dias-produccion">
+                                    2. ¿Cuántos días por semana produce?
+                                </label>
+                                <div class="input-unidad">
+                                    <input type="number" id="dias-produccion" name="dias_produccion" min="1" max="7"
+                                        inputmode="numeric" placeholder="0" required>
+                                    <span class="unidad">días/semana</span>
+                                </div>
+                            </div>
+
+                            <div class="campo campo-ancho">
+                                <span class="campo-label">
+                                    3. ¿Qué productos lácteos elabora? (Selección múltiple)
+                                </span>
+                                <div class="opciones-chip" data-multiple="true">
+                                    <label class="chip">
+                                        <input type="checkbox" name="productos" value="mozzarella">
+                                        <span>Mozzarella</span>
+                                    </label>
+                                    <label class="chip">
+                                        <input type="checkbox" name="productos" value="blandos">
+                                        <span>Quesos blandos</span>
+                                    </label>
+                                    <label class="chip">
+                                        <input type="checkbox" name="productos" value="semiduros">
+                                        <span>Quesos semiduros</span>
+                                    </label>
+                                    <label class="chip">
+                                        <input type="checkbox" name="productos" value="duros">
+                                        <span>Quesos duros</span>
+                                    </label>
+                                    <label class="chip">
+                                        <input type="checkbox" name="productos" value="ricota">
+                                        <span>Ricota</span>
+                                    </label>
+                                    <label class="chip chip-otro">
+                                        <input type="checkbox" name="productos" value="otros"
+                                            data-otro-toggle="otro-productos">
+                                        <span>Otros</span>
+                                    </label>
+                                </div>
+                                <input type="text" class="input-otro" id="otro-productos" name="productos_otro"
+                                    placeholder="Especificar producto" disabled hidden>
+                            </div>
+
+                        </fieldset>
+
+
+                        <!-- PASO 3 — LACTOSUERO -->
+                        <fieldset class="form-paso" data-paso="3">
+
+                            <div class="form-paso-titulo">
+                                <h3>Lactosuero</h3>
+                                <p>Generación de lactosuero y destino que recibe actualmente.</p>
+                            </div>
+
+                            <div class="campo">
+                                <span class="campo-label">
+                                    4. ¿Genera lactosuero como resultado de su producción?
+                                </span>
+                                <div class="opciones-chip">
+                                    <label class="chip">
+                                        <input type="radio" name="genera_lactosuero" value="si" required>
+                                        <span>Sí</span>
+                                    </label>
+                                    <label class="chip">
+                                        <input type="radio" name="genera_lactosuero" value="no" required>
+                                        <span>No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="campo campo-numerico campo-condicional" data-depende-de="genera_lactosuero"
+                                data-depende-valor="si">
+                                <label for="litros-suero-dia">
+                                    5. ¿Cuántos litros aproximadamente genera por día de producción?
+                                </label>
+                                <div class="input-unidad">
+                                    <input type="number" id="litros-suero-dia" name="litros_suero_dia" min="0"
+                                        inputmode="decimal" placeholder="Estimación si no sabe el exacto">
+                                    <span class="unidad">litros/día</span>
+                                </div>
+                            </div>
+
+                            <div class="campo campo-ancho campo-condicional" data-depende-de="genera_lactosuero"
+                                data-depende-valor="si">
+                                <span class="campo-label">
+                                    6 y 7. ¿Qué destino tiene actualmente y qué porcentaje se destina a cada uso?
+                                </span>
+                                <div class="porcentajes-group">
+
+                                    <label class="porcentaje-item">
+                                        <span class="porcentaje-check">
+                                            <input type="checkbox" id="dest-animal" data-porcentaje-toggle="porcentaje-animal">
+                                            Alimentación animal
+                                        </span>
+                                        <span class="porcentaje-input">
+                                            <input type="number" id="porcentaje-animal" name="porcentaje_animal"
+                                                min="0" max="100" placeholder="%" disabled>
+                                            <span class="unidad">%</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="porcentaje-item">
+                                        <span class="porcentaje-check">
+                                            <input type="checkbox" id="dest-otro" data-porcentaje-toggle="porcentaje-otro">
+                                            Elaboración de otro producto
+                                        </span>
+                                        <span class="porcentaje-input">
+                                            <input type="number" id="porcentaje-otro" name="porcentaje_otro" min="0"
+                                                max="100" placeholder="%" disabled>
+                                            <span class="unidad">%</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="porcentaje-item">
+                                        <span class="porcentaje-check">
+                                            <input type="checkbox" id="dest-venta" data-porcentaje-toggle="porcentaje-venta">
+                                            Entrega/venta a terceros
+                                        </span>
+                                        <span class="porcentaje-input">
+                                            <input type="number" id="porcentaje-venta" name="porcentaje_venta"
+                                                min="0" max="100" placeholder="%" disabled>
+                                            <span class="unidad">%</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="porcentaje-item">
+                                        <span class="porcentaje-check">
+                                            <input type="checkbox" id="dest-efluente" data-porcentaje-toggle="porcentaje-efluente">
+                                            Tratamiento como efluente
+                                        </span>
+                                        <span class="porcentaje-input">
+                                            <input type="number" id="porcentaje-efluente" name="porcentaje_efluente"
+                                                min="0" max="100" placeholder="%" disabled>
+                                            <span class="unidad">%</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="porcentaje-item">
+                                        <span class="porcentaje-check">
+                                            <input type="checkbox" id="dest-descarte" data-porcentaje-toggle="porcentaje-descarte">
+                                            Descarte sin aprovechamiento
+                                        </span>
+                                        <span class="porcentaje-input">
+                                            <input type="number" id="porcentaje-descarte" name="porcentaje_descarte"
+                                                min="0" max="100" placeholder="%" disabled>
+                                            <span class="unidad">%</span>
+                                        </span>
+                                    </label>
+
+                                </div>
+                                <span class="mensaje-error" id="error-porcentajes" hidden>
+                                    La suma de los porcentajes no puede superar 100%.
+                                </span>
+                            </div>
+
+                        </fieldset>
+
+
+                        <!-- PASO 4 — ESTACIONALIDAD -->
+                        <fieldset class="form-paso" data-paso="4">
+
+                            <div class="form-paso-titulo">
+                                <h3>8. ¿Cómo varía aproximadamente la producción a lo largo del año?</h3>
+                                <p>Indicar el nivel de producción estimado para cada mes.</p>
+                            </div>
+
+                            <div class="campo campo-ancho">
+                                <div class="tabla-scroll">
+                                    <table class="grid-estacionalidad">
+                                        <thead>
+                                            <tr>
+                                                <th>Mes</th>
+                                                <th>Alta</th>
+                                                <th>Media</th>
+                                                <th>Baja</th>
+                                                <th>No produce</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-meses">
+                                            <!-- Las 12 filas (Enero a Diciembre) se generan dinámicamente en relevamiento.js -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+
+                        <!-- PASO 5 — INFRAESTRUCTURA E INTERÉS -->
+                        <fieldset class="form-paso" data-paso="5">
+
+                            <div class="form-paso-titulo">
+                                <h3>Infraestructura e interés</h3>
+                                <p>Capacidad de almacenamiento en frío e interés en alternativas de valorización.</p>
+                            </div>
+
+                            <div class="campo">
+                                <label for="almacenamiento-frio">
+                                    9. ¿Dispone de capacidad para almacenar lactosuero refrigerado?
+                                </label>
+                                <select id="almacenamiento-frio" name="almacenamiento_frio">
+                                    <option value="no">No</option>
+                                    <option value="si">Sí, hasta X litros (indicar abajo)</option>
+                                    <option value="nosabe">No sabe / no puede estimarlo</option>
+                                </select>
+                            </div>
+
+                            <div class="campo campo-numerico campo-condicional" data-depende-select-de="almacenamiento-frio"
+                                data-depende-valor="si">
+                                <label for="litros-frio">
+                                    Cantidad en litros
+                                </label>
+                                <div class="input-unidad">
+                                    <input type="number" id="litros-frio" name="litros_frio" min="0"
+                                        inputmode="decimal" placeholder="0">
+                                    <span class="unidad">litros</span>
+                                </div>
+                            </div>
+
+                            <div class="campo campo-ancho">
+                                <label for="interes-alternativas">
+                                    10. ¿Estaría interesado en conocer alternativas para aprovechar o valorizar el
+                                    lactosuero que genera?
+                                </label>
+                                <select id="interes-alternativas" name="interes_alternativas">
+                                    <option value="">Seleccione...</option>
+                                    <option value="si">Sí</option>
+                                    <option value="no">No</option>
+                                    <option value="tal_vez">Tal vez / depende de la alternativa</option>
+                                </select>
+                            </div>
+
+                        </fieldset>
+
+
+                        <!-- NAVEGACIÓN DEL WIZARD -->
+                        <div class="wizard-nav">
+
+                            <button type="button" class="btn-secundario btn-anterior" id="btn-anterior" hidden>
+                                ← Anterior
+                            </button>
+
+                            <div class="wizard-nav-derecha">
+                                <button type="button" class="btn-secundario btn-limpiar" id="btn-limpiar" hidden>
+                                    Limpiar formulario
+                                </button>
+
+                                <button type="button" class="btn-iniciar btn-siguiente" id="btn-siguiente">
+                                    Siguiente
+                                    <span>→</span>
+                                </button>
+
+                                <button type="submit" class="btn-iniciar btn-finalizar" id="btn-finalizar" hidden>
+                                    Enviar
+                                    <span>✓</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- MODAL DE CONFIRMACIÓN DE ENVÍO -->
+                <div id="modal-envio" class="modal-overlay" hidden>
+                    <div class="modal-alerta" role="alertdialog" aria-modal="true" aria-labelledby="modal-envio-titulo">
+                        <div class="modal-icono">✓</div>
+                        <h3 id="modal-envio-titulo">¡Formulario enviado!</h3>
+                        <p>Gracias por completar el relevamiento. Tus respuestas fueron registradas correctamente.</p>
+                        <button type="button" class="btn-iniciar" id="modal-envio-cerrar">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <span>
+                CIENCIA DE DATOS · CURSO 2026
+            </span>
+
+            <span>
+                DATOS · ANÁLISIS · INNOVACIÓN
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+    <script src="relevamiento.js"></script>
+
+</body>
+
+</html>
