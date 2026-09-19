@@ -346,7 +346,12 @@ nav {
 .nav-btn.activo {
     color: var(--azul);
 }
-
+.logo-inicio {
+    width: 140px;
+    height: auto;
+    display: block;
+    margin-bottom: 24px;
+}
 
 /* =========================================
    CONTENIDO
