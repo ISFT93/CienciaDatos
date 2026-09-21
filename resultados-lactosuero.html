@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resultados | Ciencia de Datos</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="resultados-lactosuero.css">
+</head>
+
+<body data-palette="#3987e5,#d95926,#199e70,#c98500,#d55181">
+
+    <!-- SITIO PRINCIPAL -->
+    <main class="web-principal visible">
+
+        <!-- BARRA DE NAVEGACIÓN -->
+        <header class="navbar">
+
+            <div class="logo">
+                <div class="logo-icon">UnSV</div>
+
+                <div>
+                    <strong>Ciencia de Datos</strong>
+                    <small>Curso 2026</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="inicio.html" class="nav-btn">
+                    Inicio
+                </a>
+
+                <a href="nosotros.html" class="nav-btn">
+                    Nosotros
+                </a>
+
+                <a href="alumnos.html" class="nav-btn">
+                    Alumnos
+                </a>
+
+                <a href="proyectos.html" class="nav-btn activo">
+                    Proyectos
+                </a>
+
+                <a href="informacion.html" class="nav-btn">
+                    Información
+                </a>
+
+            </nav>
+
+        </header>
+
+
+        <!-- CONTENIDO -->
+        <div class="contenido-principal">
+
+            <section id="resultados" class="seccion activa">
+
+                <div class="resultados-wrap">
+
+                    <!-- ENCABEZADO -->
+                    <div class="resultados-header">
+
+                        <div class="titulo-seccion">
+
+                            <span class="numero">
+                                04 / PROYECTOS · LACTOSUERO
+                            </span>
+
+                            <h2>
+                                Resultados del <span>relevamiento.</span>
+                            </h2>
+
+                            <a href="lactosuero.htm" class="volver-link">← Volver</a>
+
+                        </div>
+
+                        <div class="resultados-acciones">
+
+                            <span class="ultima-actualizacion" id="ultima-actualizacion">
+                                Actualizado ahora mismo
+                            </span>
+
+                            <button type="button" class="btn-recargar" id="btn-recargar">
+                                <span class="btn-recargar-icono">⟳</span>
+                                <span class="btn-recargar-texto">Recargar datos</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STAT TILES -->
+                    <div class="stats-grid" id="stats-grid"></div>
+
+
+                    <!-- GRÁFICO DE BARRAS: LITROS DE LECHE / DÍA -->
+                    <div class="chart-card">
+
+                        <div class="chart-card-titulo">
+                            <h3>Litros de leche procesados por día</h3>
+                            <p>Por establecimiento relevado</p>
+                        </div>
+
+                        <div class="bar-chart" id="bar-chart" role="img" aria-label="Litros de leche por día por establecimiento"></div>
+
+                    </div>
+
+
+                    <!-- DESTINO DEL LACTOSUERO (agregado, solo los que generan) -->
+                    <div class="chart-card">
+
+                        <div class="chart-card-titulo">
+                            <h3>Destino actual del lactosuero</h3>
+                            <p id="destino-subtitulo">Promedio entre los establecimientos que generan lactosuero</p>
+                        </div>
+
+                        <div class="stacked-bar" id="stacked-bar" role="img" aria-label="Destino del lactosuero"></div>
+
+                        <ul class="leyenda" id="leyenda-destino"></ul>
+
+                    </div>
+
+
+                    <!-- ESTACIONALIDAD DE PRODUCCIÓN -->
+                    <div class="chart-card">
+
+                        <div class="chart-card-titulo">
+                            <h3>Estacionalidad de la producción</h3>
+                            <p>Nivel de producción promedio del grupo, mes a mes</p>
+                        </div>
+
+                        <div class="heatmap-mensual" id="heatmap-mensual" role="img" aria-label="Nivel de producción por mes"></div>
+
+                        <ul class="leyenda leyenda-estado">
+                            <li><span class="leyenda-punto" style="background: var(--estado-alta);"></span>Alta</li>
+                            <li><span class="leyenda-punto" style="background: var(--estado-media);"></span>Media</li>
+                            <li><span class="leyenda-punto" style="background: var(--estado-baja);"></span>Baja</li>
+                            <li><span class="leyenda-punto" style="background: var(--estado-nula);"></span>Nula</li>
+                        </ul>
+
+                    </div>
+
+
+                    <!-- FILA: PRODUCTOS + CAPACIDAD DE FRÍO -->
+                    <div class="chart-fila">
+
+                        <div class="chart-card">
+
+                            <div class="chart-card-titulo">
+                                <h3>Productos lácteos elaborados</h3>
+                                <p>Cantidad de establecimientos que los producen</p>
+                            </div>
+
+                            <div class="bar-chart bar-chart-compacto" id="bar-productos" role="img" aria-label="Productos lácteos elaborados por establecimiento"></div>
+
+                        </div>
+
+                        <div class="chart-card">
+
+                            <div class="chart-card-titulo">
+                                <h3>Capacidad de frío para el suero</h3>
+                                <p>¿Pueden almacenarlo refrigerado?</p>
+                            </div>
+
+                            <div class="frio-stats" id="frio-stats"></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TABLA DE REGISTROS -->
+                    <div class="chart-card">
+
+                        <div class="chart-card-titulo">
+                            <h3>Registros cargados</h3>
+                            <p id="tabla-subtitulo">Detalle de los relevamientos</p>
+                        </div>
+
+                        <div class="tabla-scroll">
+                            <table class="tabla-resultados">
+                                <thead>
+                                    <tr>
+                                        <th>Establecimiento</th>
+                                        <th>Localidad</th>
+                                        <th>Tipo</th>
+                                        <th class="col-numerica">Leche (L/día)</th>
+                                        <th class="col-numerica">¿Genera suero?</th>
+                                        <th class="col-numerica">Suero (L/día)</th>
+                                        <th>Interés en valorizar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-body"></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <span>
+                CIENCIA DE DATOS · CURSO 2026
+            </span>
+
+            <span>
+                DATOS · ANÁLISIS · INNOVACIÓN
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+    <script src="resultados-lactosuero.js"></script>
+
+</body>
+
+</html>

@@ -26,6 +26,18 @@
     color: var(--azul);
 }
 
+.volver-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--azul);
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.volver-link:hover {
+    text-decoration: underline;
+}
+
 
 /* =========================================
    WIZARD — CONTENEDOR
