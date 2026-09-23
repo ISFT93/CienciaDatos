@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alumnos | Ciencia de Datos</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    
+</head>
+
+<body>
+
+    <div id="navbar"></div>
+
+    <!-- SITIO PRINCIPAL -->
+    <main class="web-principal visible">
+
+        <!-- CONTENIDO -->
+        <div class="contenido-principal">
+
+            <!-- ALUMNOS -->
+            <section id="alumnos" class="seccion activa">
+
+                <div class="titulo-seccion">
+
+                    <span class="numero">
+                        02 / ALUMNOS
+                    </span>
+
+                    <h2>
+                        Nuestros <span>alumnos.</span>
+                    </h2>
+
+                    <p>
+                        Conocé a quienes forman parte de nuestro curso.
+                    </p>
+
+                </div>
+
+                <!-- INFORMACIÓN INSTITUCIONAL -->
+
+                <div class="info-grid">
+
+                    <div class="info-texto">
+
+                        <h3>
+                            Instituto Superior de Formación Docente y Técnica N.º 93
+                        </h3>
+
+                        <p>
+                            "Presidente Arturo Humberto Illia"
+                        </p>
+
+                        <p>
+                            Tecnicatura Superior en Ciencia de Datos e IA
+                        </p>
+
+                    </div>
+
+
+                    <div class="contacto">
+
+                        <div class="contacto-item">
+
+                            <span>
+                                DIRECTORA
+                            </span>
+
+                            <strong>
+                                Betiana Maricel Jacobsen
+                            </strong>
+
+                        </div>
+
+
+                        <div class="contacto-item">
+
+                            <span>
+                                PROFESOR
+                            </span>
+
+                            <strong>
+                                Soria, Sergio Daniel
+                            </strong>
+
+                        </div>
+
+
+                        <div class="contacto-item">
+
+                            <span>
+                                CURSO / AÑO
+                            </span>
+
+                            <strong>
+                                1.er año / 2026
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CARDS DE ALUMNOS -->
+                <div class="alumnos-grid">
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Aberasturi, Tomás Francisco', 'AT', '', '')">
+
+                        <div class="avatar">AT</div>
+
+                        <h3>Aberasturi, Tomás Francisco</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Almada Renard, María', 'AR', '', '')">
+
+                        <div class="avatar">AR</div>
+
+                        <h3>Almada Renard, María</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Armán, Agustín Matías', 'AM', '', '')">
+
+                        <div class="avatar">AM</div>
+
+                        <h3>Armán, Agustín Matías</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Cabral, Anabela Magalí', 'CM', '', '')">
+
+                        <div class="avatar">CM</div>
+
+                        <h3>Cabral, Anabela Magalí</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Espinola, Darío', 'ED', '', '')">
+
+                        <div class="avatar">ED</div>
+
+                        <h3>Espinola, Darío</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Espinoza Castro, Sergio', 'ES', '', '')">
+
+                        <div class="avatar">ES</div>
+
+                        <h3>Espinoza Castro, Sergio</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Galeano, Liliana', 'GL', '', '')">
+
+                        <div class="avatar">GL</div>
+
+                        <h3>Galeano, Liliana</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Gimenez Finocchio, Mora', 'GM', '', '')">
+
+                        <div class="avatar">GM</div>
+
+                        <h3>Gimenez Finocchio, Mora</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Ledesma, Lautaro', 'LL', '', '')">
+
+                        <div class="avatar">LL</div>
+
+                        <h3>Ledesma, Lautaro</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Luna, Victoria Aymara', 'LV', '', '')">
+
+                        <div class="avatar">LV</div>
+
+                        <h3>Luna, Victoria Aymara</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Maglietta, Leandro', 'ML', '', '')">
+
+                        <div class="avatar">ML</div>
+
+                        <h3>Maglietta, Leandro</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Peirone, Emilce Grisel', 'PG', '', '')">
+
+                        <div class="avatar">PG</div>
+
+                        <h3>Peirone, Emilce Grisel</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Pousa Morena', 'PM', '', '')">
+
+                        <div class="avatar">PM</div>
+
+                        <h3>Pousa Morena</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Puente, Martín Nicolás', 'PM', '', '')">
+
+                        <div class="avatar">PM</div>
+
+                        <h3>Puente, Martín Nicolás</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Sivrigian, Romina', 'SR', '', '')">
+
+                        <div class="avatar">SR</div>
+
+                        <h3>Sivrigian, Romina</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Sotelo, Emmanuel', 'SE', '', '')">
+
+                        <div class="avatar">SE</div>
+
+                        <h3>Sotelo, Emmanuel</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Varela, Aylen Rocío', 'VR', '', '')">
+
+                        <div class="avatar">VR</div>
+
+                        <h3>Varela, Aylen Rocío</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+
+                    <article
+                        class="alumno"
+                        onclick="abrirAlumno('Vicente, Tadeo', 'VT', '', '')">
+
+                        <div class="avatar">VT</div>
+
+                        <h3>Vicente, Tadeo</h3>
+
+                        <p>1.er año · 2026</p>
+
+                    </article>
+
+                </div>
+
+
+                <!-- TARJETA FLOTANTE DEL ALUMNO -->
+                <div id="modalAlumno" class="modal-alumno">
+
+                    <div class="tarjeta-alumno">
+
+                        <button
+                            class="cerrar-modal"
+                            onclick="cerrarAlumno()">
+                            ×
+                        </button>
+
+                        <img
+                            id="fotoAlumno"
+                            src=""
+                            alt="Foto del alumno">
+
+                        <h2 id="nombreAlumno">
+                            Nombre
+                        </h2>
+
+                        <p id="telefonoAlumno"></p>
+
+                        <p id="emailAlumno"></p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <span>
+                CIENCIA DE DATOS · CURSO 2026
+            </span>
+
+            <span>
+                DATOS · ANÁLISIS · INNOVACIÓN
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="../js/alumnos.js"></script>
+    <script src="../js/navbar.js"></script>
+
+</body>
+
+</html>
