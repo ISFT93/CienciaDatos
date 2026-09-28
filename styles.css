@@ -303,15 +303,12 @@ h1 span {
     gap: 12px;
 }
 
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--azul);
-    display: grid;
-    place-items: center;
-    color: var(--azul);
-    font-size: 12px;
-    font-weight: bold;
+.logo-img{
+    width: 100px;
+    height: auto;
+    display: block;
+    background-image: radial-gradient(#0098c6 5%,#060f18 70%), url(iso_logo.png);
+    
 }
 
 .logo strong {
