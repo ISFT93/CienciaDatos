@@ -1,4 +1,56 @@
 /* =========================================
+   LACTOSUERO — PALETA
+   Slots categóricos validados (dataviz skill)
+   contra el surface oscuro del sitio (#0b1720).
+========================================= */
+
+:root {
+    --series-1: #3987e5;
+    /* azul */
+    --series-2: #d95926;
+    /* naranja */
+    --series-3: #199e70;
+    /* aqua/verde */
+    --series-4: #c98500;
+    /* amarillo/ocre */
+    --series-5: #d55181;
+    /* magenta */
+
+    /* Paleta de estado (4 pasos, "semáforo"), validada contra el surface
+       oscuro del sitio. No es una rampa de un solo hue: al ser 4 colores
+       de familias distintas, el par medio (naranja/ámbar) queda algo
+       cerca en distinción por color solo (ΔE 13.6, bajo el piso de 15),
+       por eso cada celda que usa esta paleta SIEMPRE lleva también el
+       nombre del nivel en texto — nunca solo color. */
+    --estado-alta: #0ca30c;
+    /* verde */
+    --estado-media: #fab219;
+    /* ámbar */
+    --estado-baja: #ec835a;
+    /* naranja */
+    --estado-nula: #d03b3b;
+    /* rojo */
+}
+
+
+/* =========================================
+   VOLVER (compartido entre relevamiento y resultados)
+========================================= */
+
+.volver-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--azul);
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.volver-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
    RELEVAMIENTO — ENCABEZADO
 ========================================= */
 
@@ -11,19 +63,15 @@
     padding: 20px 0 30px;
 }
 
-.titulo-seccion {
+#relevamiento .titulo-seccion {
     margin-bottom: 14px;
 }
 
-.titulo-seccion h2 {
+#relevamiento .titulo-seccion h2 {
     font-size: clamp(20px, 2.4vw, 26px);
     line-height: 1.1;
     letter-spacing: -.5px;
     margin: 0;
-}
-
-.titulo-seccion h2 span {
-    color: var(--azul);
 }
 
 
@@ -445,10 +493,10 @@
 
 
 /* =========================================
-   TABLA DE ESTACIONALIDAD
+   TABLA DE ESTACIONALIDAD (wizard)
 ========================================= */
 
-.tabla-scroll {
+.wizard .tabla-scroll {
     overflow-x: auto;
     border: 1px solid var(--gris-oscuro);
     border-radius: 8px;
@@ -771,12 +819,525 @@
 
 
 /* =========================================
+   RESULTADOS — LAYOUT CENTRADO TIPO DASHBOARD
+========================================= */
+
+#resultados.seccion {
+    min-height: 0;
+    padding: 60px 0 30px;
+}
+
+.resultados-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   RESULTADOS — ENCABEZADO
+========================================= */
+
+.resultados-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--gris-oscuro);
+}
+
+.resultados-header .titulo-seccion {
+    margin-bottom: 0;
+}
+
+.resultados-header .titulo-seccion h2 {
+    font-size: clamp(30px, 3vw, 40px);
+    letter-spacing: -1px;
+    margin: 10px 0 12px;
+}
+
+.resultados-header .titulo-seccion p {
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 520px;
+}
+
+.resultados-acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+    flex-shrink: 0;
+    padding-top: 4px;
+}
+
+.resultados-acciones-botones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ultima-actualizacion {
+    font-size: 11px;
+    letter-spacing: .5px;
+    color: var(--gris);
+    white-space: nowrap;
+}
+
+
+/* Botón recargar — mismo lenguaje visual que .btn-iniciar */
+.btn-recargar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    height: 42px;
+    padding: 0 18px;
+    background: transparent;
+    color: var(--blanco);
+    border: 1px solid var(--azul-oscuro);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: .3s;
+}
+
+.btn-recargar:hover {
+    background: var(--azul);
+    color: var(--negro);
+}
+
+.btn-recargar-icono {
+    display: inline-block;
+    color: var(--azul);
+    font-size: 15px;
+    line-height: 1;
+    transition: color .3s;
+}
+
+.btn-recargar:hover .btn-recargar-icono {
+    color: var(--negro);
+}
+
+.btn-recargar.cargando {
+    cursor: progress;
+    opacity: .75;
+}
+
+.btn-recargar.cargando .btn-recargar-icono {
+    animation: girar .6s linear infinite;
+}
+
+@keyframes girar {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Botón nuevo relevamiento — sólido, para la vista unificada */
+.btn-nuevo-relevamiento {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 20px;
+    background: var(--azul);
+    color: var(--negro);
+    border: 1px solid var(--azul);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.btn-nuevo-relevamiento:hover {
+    background: transparent;
+    color: var(--blanco);
+}
+
+
+/* =========================================
+   STAT TILES
+========================================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.stat-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 22px 20px;
+    border: 1px solid var(--gris-oscuro);
+    background: var(--negro-2);
+    text-align: center;
+    transition: border-color .3s;
+}
+
+.stat-tile:hover {
+    border-color: var(--azul-oscuro);
+}
+
+.stat-label {
+    font-size: 11px;
+    letter-spacing: .5px;
+    color: var(--gris);
+}
+
+.stat-value {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--blanco);
+    font-variant-numeric: proportional-nums;
+}
+
+.stat-value small {
+    font-size: 14px;
+    font-weight: normal;
+    color: var(--gris);
+}
+
+
+/* =========================================
+   CHART CARD (contenedor genérico)
+========================================= */
+
+.chart-card {
+    border: 1px solid var(--gris-oscuro);
+    background: var(--negro-2);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+}
+
+.chart-fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-fila .chart-card {
+    margin-bottom: 20px;
+}
+
+.chart-card-titulo {
+    margin-bottom: 22px;
+}
+
+.chart-card-titulo h3 {
+    font-size: 17px;
+    margin: 0 0 4px;
+    letter-spacing: .2px;
+}
+
+.chart-card-titulo p {
+    font-size: 12px;
+    color: var(--gris);
+}
+
+
+/* =========================================
+   GRÁFICO DE BARRAS HORIZONTALES
+========================================= */
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.bar-row {
+    display: grid;
+    grid-template-columns: 170px 1fr 75px;
+    align-items: center;
+    gap: 14px;
+}
+
+.bar-etiqueta {
+    font-size: 12px;
+    color: var(--gris);
+}
+
+.bar-pista {
+    background: var(--gris-oscuro);
+    height: 20px;
+}
+
+.bar-fill {
+    height: 100%;
+    background: var(--series-1);
+    border-radius: 0 4px 4px 0;
+    transition: width .5s ease;
+}
+
+.bar-valor {
+    font-size: 12px;
+    color: var(--blanco);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Variante compacta, para compartir fila con otro chart-card */
+.bar-chart-compacto .bar-row {
+    grid-template-columns: 120px 1fr 24px;
+    gap: 10px;
+}
+
+.bar-chart-compacto .bar-valor {
+    text-align: left;
+}
+
+
+/* =========================================
+   ESTACIONALIDAD — HEATMAP MENSUAL
+========================================= */
+
+.heatmap-mensual {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 6px;
+}
+
+.heatmap-celda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.heatmap-color {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .5s ease;
+}
+
+.heatmap-nivel {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .3px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Texto siempre en tinta oscura salvo sobre el rojo (nivel "Nula"),
+   donde blanco da mejor contraste — medido contra cada uno de los
+   4 colores de estado, nunca supuesto. */
+.heatmap-nivel {
+    color: var(--negro);
+}
+
+.heatmap-color.nivel-nula .heatmap-nivel {
+    color: var(--blanco);
+}
+
+.heatmap-mes {
+    font-size: 10px;
+    color: var(--gris);
+    letter-spacing: .3px;
+}
+
+.leyenda-estado {
+    margin-top: 20px;
+}
+
+
+/* =========================================
+   CAPACIDAD DE FRÍO — MINI STAT TILES
+========================================= */
+
+.frio-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.frio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 10px;
+    border: 1px solid var(--gris-oscuro);
+    text-align: center;
+}
+
+.frio-tile-punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+.frio-tile-valor {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--blanco);
+}
+
+.frio-tile-label {
+    font-size: 11px;
+    color: var(--gris);
+    line-height: 1.3;
+}
+
+.frio-tile-porcentaje {
+    font-size: 11px;
+    color: var(--azul);
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================
+   BARRA APILADA (DESTINO DEL LACTOSUERO)
+========================================= */
+
+.stacked-bar {
+    display: flex;
+    width: 100%;
+    height: 28px;
+    gap: 2px;
+    margin-bottom: 20px;
+}
+
+.stacked-segmento {
+    height: 100%;
+    transition: width .5s ease;
+}
+
+.leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    list-style: none;
+    font-size: 12px;
+    color: var(--gris);
+}
+
+.leyenda-punto {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+
+/* =========================================
+   RESULTADOS — TABLA DE REGISTROS
+========================================= */
+
+.resultados-wrap .tabla-scroll {
+    overflow-x: auto;
+}
+
+.tabla-resultados {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--gris-oscuro);
+    white-space: nowrap;
+}
+
+.tabla-resultados th.col-numerica,
+.tabla-resultados td.col-numerica {
+    text-align: center;
+}
+
+.tabla-resultados th {
+    color: var(--gris);
+    font-size: 11px;
+    letter-spacing: .5px;
+    font-weight: normal;
+}
+
+.tabla-resultados tbody tr:hover {
+    background: rgba(0, 217, 255, .03);
+}
+
+.tabla-resultados td {
+    color: var(--blanco);
+    font-variant-numeric: tabular-nums;
+}
+
+.chip-estado {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.chip-estado.si {
+    background: rgba(25, 158, 112, .15);
+    color: #4fd8a8;
+}
+
+.chip-estado.no {
+    background: rgba(217, 89, 38, .15);
+    color: #f0a06f;
+}
+
+
+/* =========================================
    RESPONSIVE
 ========================================= */
 
+@media (max-width: 900px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .resultados-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .resultados-acciones {
+        align-items: flex-start;
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .chart-fila {
+        grid-template-columns: 1fr;
+    }
+
+    .heatmap-mensual {
+        grid-template-columns: repeat(6, 1fr);
+        row-gap: 14px;
+    }
+
+}
+
 @media (max-width: 700px) {
 
-    .titulo-seccion h2 {
+    #relevamiento .titulo-seccion h2 {
         font-size: 34px;
     }
 
@@ -797,4 +1358,42 @@
         margin-left: 0;
         justify-content: space-between;
     }
+}
+
+@media (max-width: 600px) {
+
+    .resultados-header .titulo-seccion h2 {
+        font-size: 30px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card {
+        padding: 22px 18px;
+    }
+
+    .bar-row {
+        grid-template-columns: 100px 1fr 55px;
+        gap: 8px;
+    }
+
+    .bar-etiqueta {
+        font-size: 11px;
+    }
+
+    .heatmap-mensual {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .frio-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-recargar {
+        width: 100%;
+        justify-content: center;
+    }
+
 }
