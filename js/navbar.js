@@ -7,21 +7,25 @@ document.addEventListener("DOMContentLoaded", function () {
     navbar.innerHTML = `
         <header class="navbar">
 
-            <div class="logo">
-                <img src="../img/logo2.png" alt="Ciencia de Datos">
-            </div>
-
-            <button class="menu-hamburguesa" id="menuHamburguesa">
-                ☰
-            </button>
+            <a href="index.html" class="logo">
+                <img src="img/iso_logo.png" alt="Ciencia de Datos">
+            </a>
 
             <nav id="menuNavegacion">
                 <a href="inicio.html">Inicio</a>
                 <a href="nosotros.html">Nosotros</a>
-                <a href="alumnos.html">Alumnos</a>
+                <a href="alumnos.php">Alumnos</a>
                 <a href="proyectos.html">Proyectos</a>
                 <a href="informacion.html">Información</a>
             </nav>
+
+            <button class="btn-tema" id="btnTema">
+                ☀
+            </button>
+
+            <button class="menu-hamburguesa" id="menuHamburguesa">
+                ☰
+            </button>
 
         </header>
     `;
@@ -34,6 +38,33 @@ document.addEventListener("DOMContentLoaded", function () {
     botonMenu.addEventListener("click", function () {
 
         menu.classList.toggle("menu-abierto");
+
+    });
+
+    const botonTema = document.getElementById("btnTema");
+
+    const temaGuardado = localStorage.getItem("tema");
+
+    if (temaGuardado === "claro") {
+        document.body.classList.add("modo-claro");
+        botonTema.textContent = "🌙";
+    }
+
+    botonTema.addEventListener("click", function () {
+
+        document.body.classList.toggle("modo-claro");
+
+        if (document.body.classList.contains("modo-claro")) {
+
+            botonTema.textContent = "🌙";
+            localStorage.setItem("tema", "claro");
+
+        } else {
+
+            botonTema.textContent = "☀";
+            localStorage.setItem("tema", "oscuro");
+
+        }
 
     });
 
