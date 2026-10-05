@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <header class="navbar">
 
             <div class="logo">
-                <img src="../img/logo2.png" alt="Ciencia de Datos">
+                <img src="img/iso_logo.png" alt="Ciencia de Datos">
             </div>
 
             <button class="menu-hamburguesa" id="menuHamburguesa">
