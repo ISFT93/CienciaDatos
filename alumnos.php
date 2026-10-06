@@ -197,23 +197,13 @@ $resultado = $conexion->query($sql);
 
         <!-- FOOTER -->
 
-        <footer>
-
-            <span>
-                CIENCIA DE DATOS · CURSO 2026
-            </span>
-
-            <span>
-                DATOS · ANÁLISIS · INNOVACIÓN
-            </span>
-
-        </footer>
+        <footer class="footer" id="footer"></footer>
 
     </main>
 
 
     <script src="js/alumnos.js"></script>
-
+    <script src="js/footer.js"></script>
     <script src="js/navbar.js"></script>
 
 </body>
