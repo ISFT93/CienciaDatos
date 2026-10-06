@@ -8,6 +8,11 @@
 -- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
+CREATE DATABASE IF NOT EXISTS ciencia_datos;
+
+USE ciencia_datos;
+
 START TRANSACTION;
 SET time_zone = "+00:00";
 
