@@ -330,6 +330,23 @@ h1 span {
     align-items: center;
     flex-shrink: 0;
     transition: .3s;
+    text-decoration: none;
+}
+
+.logo div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.logo strong {
+    color: var(--blanco);
+    font-size: 15px;
+}
+
+.logo small {
+    color: var(--gris);
+    font-size: 11px;
 }
 
 .logo:hover {
@@ -1203,8 +1220,8 @@ h1 span {
 
     .btn-tema {
         position: absolute;
-        right: 70px;
-        top: 25%;
+        right: 90px;
+        top: 12%;
         margin: 0;
     }
 
@@ -1220,6 +1237,7 @@ h1 span {
         width: 100px;
         height: auto;
     }
+
 
     .menu-hamburguesa {
         display: flex;
@@ -1718,4 +1736,130 @@ footer {
     object-fit: contain;
     display: block;
     margin: 0 auto 18px;
+}
+
+/* =========================================
+   CONSULTAS
+========================================= */
+
+.form-consultas {
+    max-width: 700px;
+    margin: 30px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-consultas .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-consultas label {
+    color: var(--blanco);
+    font-size: 14px;
+}
+
+.form-consultas input,
+.form-consultas textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: #a0dceb;
+    border: 2px solid var(--gris);
+    border-radius: 6px;
+    color: #000000;
+    font-family: inherit;
+    font-size: 14px;
+    transition: .2s;
+    box-sizing: border-box;
+}
+
+.form-consultas textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.form-consultas input:focus,
+.form-consultas textarea:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(0, 217, 255, .2);
+}
+
+.form-consultas button {
+    align-self: center;
+    padding: 12px 22px;
+    background: var(--azul);
+    color: var(--negro);
+    border: 1px solid var(--azul);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.form-consultas button:hover {
+    background: transparent;
+    color: var(--azul);
+}
+
+/* TÍTULO DE CONSULTAS */
+
+.form-consultas {
+    text-align: left;
+}
+
+.seccion:has(.form-consultas) h1,
+.seccion:has(.form-consultas) p {
+    text-align: center;
+}
+
+/* MENSAJE DE CONSULTA */
+
+.mensaje-consulta {
+    width: fit-content;
+    margin: 15px auto 0;
+    padding: 12px 20px;
+    background: #7acfe4;
+    color: #000000;
+    border: 2px solid var(--azul);
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
+}
+
+/* =========================================
+   RESPONSIVE - CONSULTAS
+========================================= */
+
+@media (max-width: 600px) {
+
+    .form-consultas {
+        width: 90%;
+        gap: 15px;
+    }
+
+    .form-consultas input,
+    .form-consultas textarea {
+        font-size: 14px;
+        padding: 11px 12px;
+    }
+
+    .form-consultas textarea {
+        min-height: 130px;
+    }
+
+    .form-consultas button {
+        width: 100%;
+    }
+
+    .mensaje-consulta {
+        max-width: 90%;
+        font-size: 13px;
+        padding: 10px 15px;
+    }
+
 }

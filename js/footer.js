@@ -1,27 +1,3 @@
-/* =========================================
-   FOOTER COMPARTIDO
-   -----------------------------------------
-   El footer se escribe UNA SOLA VEZ en este
-   archivo y se carga en todas las páginas.
-
-   Cada página solo tiene:
-     <footer class="footer" id="footer"></footer>
-     <script src="footer.js"></script>
-
-   Para cambiar el footer en todo el sitio,
-   se modifica únicamente este archivo.
-========================================= */
-
-
-/* =========================================
-   REDES Y CONTACTO
-   -----------------------------------------
-   Para agregar, quitar o cambiar una red,
-   se edita esta lista. Cada red tiene:
-     nombre -> texto que se muestra
-     url    -> link al que lleva
-     icono  -> dibujo SVG (ver ICONOS abajo)
-========================================= */
 
 const REDES = [
     {

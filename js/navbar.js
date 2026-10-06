@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             <a href="index.html" class="logo">
                 <img src="img/iso_logo.png" alt="Ciencia de Datos">
+
+                <div>
+                    <strong>Ciencia de Datos</strong>
+                    <small>Curso 2026</small>
+                </div>
             </a>
 
             <nav id="menuNavegacion">
