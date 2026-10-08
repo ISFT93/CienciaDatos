@@ -14,6 +14,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST["email"]);
     $consulta = trim($_POST["consulta"]);
 
+    $website = trim($_POST["website"] ?? "");
+
+    if ($website !== "") {
+        die("Envío rechazado.");
+    }
+
+    if (
+    strlen($nombre) > 100 ||
+    strlen($email) > 150 ||
+    strlen($consulta) > 1000
+    ) {
+        die("Los datos enviados superan el límite permitido.");
+    }
+
     $stmt = $conexion->prepare(
         "INSERT INTO consultas (nombre, email, consulta) VALUES (?, ?, ?)"
     );
@@ -65,17 +79,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <div class="campo">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                    <input type="text" id="nombre" name="nombre" maxlength="100" required>
                 </div>
 
                 <div class="campo">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" maxlength="150" required>
+                </div>
+
+                <div class="campo-honeypot">
+
+                    <label for="website">Website</label>
+
+                    <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        tabindex="-1"
+                        autocomplete="off"
+                    >
+
                 </div>
 
                 <div class="campo">
                     <label for="consulta">Consulta</label>
-                    <textarea id="consulta" name="consulta" rows="6" required></textarea>
+                    <textarea id="consulta" name="consulta" rows="6" maxlength="1000" required></textarea>
                 </div>
 
                 <button type="submit">Enviar consulta</button>

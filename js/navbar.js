@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <a href="nosotros.html">Nosotros</a>
                 <a href="alumnos.php">Alumnos</a>
                 <a href="proyectos.html">Proyectos</a>
+                <a href="consultas.php">Consultas</a>
                 <a href="informacion.html">Información</a>
             </nav>
 
