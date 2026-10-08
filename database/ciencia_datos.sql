@@ -27,6 +27,22 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+CREATE TABLE `consultas` (
+  `id_consulta` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `consulta` text NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_consulta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `usuarios_admin` (
+  `id_admin` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_admin`),
+  UNIQUE KEY `usuario` (`usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Estructura de tabla para la tabla `alumnos`
