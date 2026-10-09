@@ -19,6 +19,7 @@ $resultado = $conexion->query($sql);
 
     <title>Alumnos | Ciencia de Datos</title>
 
+    <link rel="icon" type="image/png" href="img/iso_logo.png">
     <link rel="stylesheet" href="css/styles.css">
 
 </head>

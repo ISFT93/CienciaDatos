@@ -33,7 +33,8 @@ const PAGINAS = [
     { nombre: "Nosotros",    url: "nosotros.html" },
     { nombre: "Alumnos",     url: "alumnos.php" },
     { nombre: "Proyectos",   url: "proyectos.html" },
-    { nombre: "Información", url: "informacion.html" }
+    { nombre: "Información", url: "informacion.html" },
+    { nombre: "Consultas",   url: "consultas.php" }
 ];
 
 

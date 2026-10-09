@@ -1963,3 +1963,94 @@ footer {
 .campo-honeypot {
     display: none;
 }
+
+/* Pantalla de acceso */
+.seccion.activa {
+    min-height: auto;
+}
+
+
+
+@media (max-width: 600px) {
+
+    /* PANTALLA INICIAL EN CELULAR */
+
+    .pantalla-inicio {
+        flex-direction: column;
+    }
+
+    .panel {
+        width: 100%;
+    }
+
+    /* PARTE SUPERIOR */
+
+    .panel-izquierdo {
+        height: 52%;
+        align-items: flex-start;
+    }
+
+    .contenido-inicio {
+        width: 90%;
+        margin-top: 30px;
+    }
+
+    .logo-inicio {
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo-inicio img {
+        width: 180px;
+        height: auto;
+    }
+
+    h1 {
+        font-size: 52px;
+        text-align: center;
+        margin: 15px 0;
+    }
+
+    .contenido-inicio p {
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .btn-iniciar {
+        display: block;
+        margin: 22px auto 0;
+        padding: 12px 20px;
+    }
+
+    /* PARTE INFERIOR */
+
+    .panel-derecho {
+        height: 48%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+    }
+
+    .grafico {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        gap: 8px;
+    }
+
+    .barra {
+        width: 30px;
+    }
+
+    .texto-datos {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 3%;
+        font-size: 9px;
+    }
+}

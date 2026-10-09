@@ -27,6 +27,7 @@ $resultado = $conexion->query(
 
     <title>Panel | Ciencia de Datos</title>
 
+    <link rel="icon" type="image/png" href="img/iso_logo.png">
     <link rel="stylesheet" href="css/styles.css">
 
 </head>
@@ -101,7 +102,16 @@ $resultado = $conexion->query(
 
         </section>
 
+        
+        <!-- FOOTER -->
+
+        <footer class="footer" id="footer"></footer>
+
+
     </main>
+
+    <script src="js/footer.js"></script>
+
 
 </body>
 

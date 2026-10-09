@@ -120,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <title>Acceso | Ciencia de Datos</title>
 
+    <link rel="icon" type="image/png" href="img/iso_logo.png">
     <link rel="stylesheet" href="css/styles.css">
 
 </head>
@@ -169,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <button type="submit">
                     Ingresar
                 </button>
-
+                
                 <?php if ($mensaje != ""): ?>
 
                     <div class="mensaje-consulta">
@@ -182,7 +183,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         </section>
 
+        
+        <!-- FOOTER -->
+
+        <footer class="footer" id="footer"></footer>
+
+
     </main>
+
+    <script src="js/footer.js"></script>
+
 
 </body>
 
