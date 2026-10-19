@@ -967,6 +967,32 @@
 
 
 /* =========================================
+   BOTÓN MÉTRICAS DE ALUMNOS
+========================================= */
+
+.metricas-alumnos-cta {
+    margin-bottom: 24px;
+}
+
+.btn-metricas-alumnos {
+    display: inline-block;
+    padding: 14px 24px;
+    border: 1px solid var(--azul);
+    color: var(--azul);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.btn-metricas-alumnos:hover {
+    background: var(--azul);
+    color: var(--negro);
+}
+
+
+/* =========================================
    STAT TILES
 ========================================= */
 

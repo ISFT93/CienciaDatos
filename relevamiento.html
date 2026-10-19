@@ -93,9 +93,6 @@
                                 </label>
                                 <select id="tipo-establecimiento" name="tipo_establecimiento" required>
                                     <option value="">Seleccione una opción...</option>
-                                    <option value="fabrica">Fábrica láctea / quesería</option>
-                                    <option value="tambo">Tambo con elaboración propia</option>
-                                    <option value="cooperativa">Cooperativa</option>
                                 </select>
                             </div>
 
@@ -105,10 +102,6 @@
                                 </label>
                                 <select id="localidad" name="localidad" required>
                                     <option value="">Seleccione una opción...</option>
-                                    <option value="san-vicente">San Vicente</option>
-                                    <option value="domselaar">Domselaar</option>
-                                    <option value="alejandro-korn">Alejandro Korn</option>
-                                    <option value="otro" data-otro-toggle="otro-localidad">Otro</option>
                                 </select>
                                 <input type="text" class="input-otro" id="otro-localidad" name="localidad_otro"
                                     placeholder="Especificar localidad" disabled hidden>
@@ -166,33 +159,7 @@
                                 <span class="campo-label">
                                     3. ¿Qué productos lácteos elabora? (Selección múltiple)
                                 </span>
-                                <div class="opciones-chip" data-multiple="true">
-                                    <label class="chip">
-                                        <input type="checkbox" name="productos" value="mozzarella">
-                                        <span>Mozzarella</span>
-                                    </label>
-                                    <label class="chip">
-                                        <input type="checkbox" name="productos" value="blandos">
-                                        <span>Quesos blandos</span>
-                                    </label>
-                                    <label class="chip">
-                                        <input type="checkbox" name="productos" value="semiduros">
-                                        <span>Quesos semiduros</span>
-                                    </label>
-                                    <label class="chip">
-                                        <input type="checkbox" name="productos" value="duros">
-                                        <span>Quesos duros</span>
-                                    </label>
-                                    <label class="chip">
-                                        <input type="checkbox" name="productos" value="ricota">
-                                        <span>Ricota</span>
-                                    </label>
-                                    <label class="chip chip-otro">
-                                        <input type="checkbox" name="productos" value="otros"
-                                            data-otro-toggle="otro-productos">
-                                        <span>Otros</span>
-                                    </label>
-                                </div>
+                                <div class="opciones-chip" data-multiple="true" id="opciones-productos"></div>
                                 <input type="text" class="input-otro" id="otro-productos" name="productos_otro"
                                     placeholder="Especificar producto" disabled hidden>
                             </div>
@@ -241,69 +208,7 @@
                                 <span class="campo-label">
                                     6 y 7. ¿Qué destino tiene actualmente y qué porcentaje se destina a cada uso?
                                 </span>
-                                <div class="porcentajes-group">
-
-                                    <label class="porcentaje-item">
-                                        <span class="porcentaje-check">
-                                            <input type="checkbox" id="dest-animal" data-porcentaje-toggle="porcentaje-animal">
-                                            Alimentación animal
-                                        </span>
-                                        <span class="porcentaje-input">
-                                            <input type="number" id="porcentaje-animal" name="porcentaje_animal"
-                                                min="0" max="100" placeholder="%" disabled>
-                                            <span class="unidad">%</span>
-                                        </span>
-                                    </label>
-
-                                    <label class="porcentaje-item">
-                                        <span class="porcentaje-check">
-                                            <input type="checkbox" id="dest-otro" data-porcentaje-toggle="porcentaje-otro">
-                                            Elaboración de otro producto
-                                        </span>
-                                        <span class="porcentaje-input">
-                                            <input type="number" id="porcentaje-otro" name="porcentaje_otro" min="0"
-                                                max="100" placeholder="%" disabled>
-                                            <span class="unidad">%</span>
-                                        </span>
-                                    </label>
-
-                                    <label class="porcentaje-item">
-                                        <span class="porcentaje-check">
-                                            <input type="checkbox" id="dest-venta" data-porcentaje-toggle="porcentaje-venta">
-                                            Entrega/venta a terceros
-                                        </span>
-                                        <span class="porcentaje-input">
-                                            <input type="number" id="porcentaje-venta" name="porcentaje_venta"
-                                                min="0" max="100" placeholder="%" disabled>
-                                            <span class="unidad">%</span>
-                                        </span>
-                                    </label>
-
-                                    <label class="porcentaje-item">
-                                        <span class="porcentaje-check">
-                                            <input type="checkbox" id="dest-efluente" data-porcentaje-toggle="porcentaje-efluente">
-                                            Tratamiento como efluente
-                                        </span>
-                                        <span class="porcentaje-input">
-                                            <input type="number" id="porcentaje-efluente" name="porcentaje_efluente"
-                                                min="0" max="100" placeholder="%" disabled>
-                                            <span class="unidad">%</span>
-                                        </span>
-                                    </label>
-
-                                    <label class="porcentaje-item">
-                                        <span class="porcentaje-check">
-                                            <input type="checkbox" id="dest-descarte" data-porcentaje-toggle="porcentaje-descarte">
-                                            Descarte sin aprovechamiento
-                                        </span>
-                                        <span class="porcentaje-input">
-                                            <input type="number" id="porcentaje-descarte" name="porcentaje_descarte"
-                                                min="0" max="100" placeholder="%" disabled>
-                                            <span class="unidad">%</span>
-                                        </span>
-                                    </label>
-
-                                </div>
+                                <div class="porcentajes-group" id="porcentajes-destinos"></div>
                                 <span class="mensaje-error" id="error-porcentajes" hidden>
                                     La suma de los porcentajes no puede superar 100%.
                                 </span>

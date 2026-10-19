@@ -1,71 +1,10 @@
 /* =========================================
    RESULTADOS LACTOSUERO
-   Datos ficticios de demostración. Simulan
-   relevamientos cargándose en vivo mientras
-   otro alumno hace la encuesta en el campo.
+   Los datos se leen de api/resultados_lactosuero.php
+   (relevamientos guardados en la base).
 ========================================= */
 
 (() => {
-
-    const DESTINOS = [
-        { clave: "animal", etiqueta: "Alimentación animal", color: "var(--series-1)" },
-        { clave: "otro", etiqueta: "Elaboración de otro producto", color: "var(--series-2)" },
-        { clave: "venta", etiqueta: "Venta a terceros", color: "var(--series-3)" },
-        { clave: "efluente", etiqueta: "Tratamiento como efluente", color: "var(--series-4)" },
-        { clave: "descarte", etiqueta: "Descarte sin aprovechamiento", color: "var(--series-5)" },
-    ];
-
-    // Establecimientos base — cada recarga varía sus valores
-    // dentro de un rango realista, simulando nuevas respuestas.
-    // Los productos y la estacionalidad respetan las mismas opciones
-    // que ofrece el formulario (pasos 2, 4 y 5 de relevamiento.html).
-    // Estacionalidad de referencia para la cuenca lechera pampeana:
-    // pico en primavera (Sep–Nov, post-parición y buena pastura) y en
-    // otoño (Mar–Abr); baja marcada en verano (Dic–Feb, estrés calórico)
-    // y un valle menor en pleno invierno (Jun–Jul). Cada establecimiento
-    // sigue este patrón con corrimientos leves, no al azar puro.
-    const ESTACIONALIDAD_TIPO = ["baja", "baja", "alta", "alta", "media", "baja", "baja", "media", "alta", "alta", "alta", "media"];
-
-    const BASE = [
-        {
-            nombre: "Napoli", localidad: "San Vicente", tipo: "Fábrica láctea / quesería",
-            leche: 1800, generaSuero: true, interes: "Sí",
-            productos: ["mozzarella", "semiduros"], frio: "si",
-            estacionalidad: ESTACIONALIDAD_TIPO,
-        },
-        {
-            nombre: "Tambo San Martín", localidad: "Alejandro Korn", tipo: "Tambo con elaboración propia",
-            leche: 900, generaSuero: true, interes: "Tal vez",
-            productos: ["blandos", "ricota"], frio: "no",
-            estacionalidad: ["baja", "baja", "media", "alta", "alta", "media", "baja", "baja", "media", "alta", "alta", "media"],
-        },
-        {
-            nombre: "Cooperativa Domselaar", localidad: "Domselaar", tipo: "Cooperativa",
-            leche: 2200, generaSuero: true, interes: "Sí",
-            productos: ["duros", "semiduros", "mozzarella"], frio: "si",
-            estacionalidad: ESTACIONALIDAD_TIPO,
-        },
-        {
-            nombre: "Quesería El Alba", localidad: "San Vicente", tipo: "Fábrica láctea / quesería",
-            leche: 650, generaSuero: false, interes: "Sí",
-            productos: ["blandos"], frio: "nosabe",
-            estacionalidad: ["baja", "baja", "baja", "media", "alta", "media", "baja", "baja", "media", "alta", "media", "baja"],
-        },
-        {
-            nombre: "Tambo Los Ceibos", localidad: "Alejandro Korn", tipo: "Tambo con elaboración propia",
-            leche: 1000, generaSuero: true, interes: "No",
-            productos: ["ricota", "mozzarella"], frio: "no",
-            estacionalidad: ["baja", "media", "alta", "alta", "media", "baja", "baja", "media", "alta", "alta", "media", "baja"],
-        },
-    ];
-
-    const PRODUCTOS = [
-        { clave: "mozzarella", etiqueta: "Mozzarella" },
-        { clave: "blandos", etiqueta: "Quesos blandos" },
-        { clave: "semiduros", etiqueta: "Quesos semiduros" },
-        { clave: "duros", etiqueta: "Quesos duros" },
-        { clave: "ricota", etiqueta: "Ricota" },
-    ];
 
     const MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
@@ -80,74 +19,69 @@
 
     const fmt = (n) => n.toLocaleString("es-AR");
 
-    const azar = (min, max) => Math.round(min + Math.random() * (max - min));
+    // Los nombres los cargan los usuarios del formulario: se escapan antes de usar innerHTML.
+    const esc = (texto) => String(texto ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[c]));
 
-    // Genera porcentajes de destino que suman 100, con algo de variación.
-    function generarDestinos() {
-        let valores = DESTINOS.map(() => azar(8, 40));
-        const suma = valores.reduce((a, b) => a + b, 0);
-        valores = valores.map((v) => Math.round((v / suma) * 100));
-
-        // Ajuste de redondeo para que sumen exactamente 100.
-        const diferencia = 100 - valores.reduce((a, b) => a + b, 0);
-        valores[0] += diferencia;
-
-        return DESTINOS.map((d, i) => ({ ...d, porcentaje: valores[i] }));
-    }
+    const sinDatos = '<p style="opacity: 0.7;">Todavía no hay relevamientos cargados.</p>';
 
     // Cuenta cuántos establecimientos elaboran cada producto.
-    function contarProductos(registros) {
-        return PRODUCTOS.map((p) => ({
+    function contarProductos(registros, productos) {
+        return productos.map((p) => ({
             ...p,
             cantidad: registros.filter((r) => r.productos.includes(p.clave)).length,
         })).sort((a, b) => b.cantidad - a.cantidad);
     }
 
     // Promedia el nivel de producción del grupo para cada mes (0 a 3).
+    // Solo cuentan los establecimientos que respondieron ese mes.
     function calcularEstacionalidad(registros) {
         return MESES.map((mes, i) => {
-            const promedio = registros.reduce((a, r) => a + PESO_NIVEL[r.estacionalidad[i]], 0) / registros.length;
+            const niveles = registros.map((r) => r.estacionalidad[i]).filter((n) => n !== null);
+            const promedio = niveles.length
+                ? niveles.reduce((a, n) => a + PESO_NIVEL[n], 0) / niveles.length
+                : null;
             return { mes, promedio };
         });
     }
 
     function contarFrio(registros) {
-        const total = registros.length;
         const conteo = { si: 0, no: 0, nosabe: 0 };
-        registros.forEach((r) => conteo[r.frio]++);
+        registros.forEach((r) => { if (r.frio in conteo) conteo[r.frio]++; });
+        const total = Object.values(conteo).reduce((a, b) => a + b, 0);
         return Object.keys(conteo).map((clave) => ({
             clave,
             etiqueta: FRIO_ETIQUETAS[clave],
             cantidad: conteo[clave],
-            porcentaje: Math.round((conteo[clave] / total) * 100),
+            porcentaje: total ? Math.round((conteo[clave] / total) * 100) : 0,
         }));
     }
 
-    function generarDatos() {
-        const registros = BASE.map((est) => {
-            const leche = Math.max(200, est.leche + azar(-120, 120));
-            const generaSuero = est.generaSuero;
-            const suero = generaSuero ? Math.round(leche * (0.35 + Math.random() * 0.25)) : null;
-            return { ...est, leche, suero };
-        });
+    // Pide los relevamientos a api/resultados_lactosuero.php y calcula los totales y
+    // agregados que muestran las tarjetas y los gráficos.
+    async function cargarDatos() {
+        const respuesta = await fetch("api/resultados_lactosuero.php");
 
-        const totalLeche = registros.reduce((a, r) => a + r.leche, 0);
+        if (!respuesta.ok) throw new Error("No se pudieron cargar los resultados");
+
+        const api = await respuesta.json();
+        const registros = api.registros;
+
         const conSuero = registros.filter((r) => r.generaSuero);
-        const totalSuero = conSuero.reduce((a, r) => a + r.suero, 0);
-        const interesados = registros.filter((r) => r.interes === "Sí").length;
 
         return {
             registros,
-            destinos: generarDestinos(),
-            productos: contarProductos(registros),
+            destinos: api.destinos.map((d, i) => ({ ...d, color: `var(--series-${(i % 5) + 1})` })),
+            productos: contarProductos(registros, api.productos),
             estacionalidad: calcularEstacionalidad(registros),
             frio: contarFrio(registros),
             resumen: {
                 establecimientos: registros.length,
-                totalLeche,
+                totalLeche: registros.reduce((a, r) => a + r.leche, 0),
                 conSuero: conSuero.length,
-                totalSuero,
-                interesados,
+                totalSuero: conSuero.reduce((a, r) => a + (r.suero || 0), 0),
+                interesados: registros.filter((r) => r.interes === "Sí").length,
             },
         };
     }
@@ -180,13 +114,13 @@
 
     function renderBarChart(registros) {
         const cont = document.getElementById("bar-chart");
-        const maxLeche = Math.max(...registros.map((r) => r.leche));
+        const maxLeche = Math.max(...registros.map((r) => r.leche), 1);
 
         cont.innerHTML = registros.map((r) => {
             const ancho = Math.round((r.leche / maxLeche) * 100);
             return `
                 <div class="bar-row">
-                    <span class="bar-etiqueta">${r.nombre}</span>
+                    <span class="bar-etiqueta">${esc(r.nombre)}</span>
                     <div class="bar-pista">
                         <div class="bar-fill" style="width: ${ancho}%;"></div>
                     </div>
@@ -208,7 +142,7 @@
         ).join("");
 
         leyenda.innerHTML = destinos.map((d) =>
-            `<li><span class="leyenda-punto" style="background: ${d.color};"></span>${d.etiqueta} — ${d.porcentaje}%</li>`
+            `<li><span class="leyenda-punto" style="background: ${d.color};"></span>${esc(d.etiqueta)} — ${d.porcentaje}%</li>`
         ).join("");
     }
 
@@ -220,7 +154,7 @@
             const ancho = Math.round((p.cantidad / maxCantidad) * 100);
             return `
                 <div class="bar-row bar-row-compacto">
-                    <span class="bar-etiqueta">${p.etiqueta}</span>
+                    <span class="bar-etiqueta">${esc(p.etiqueta)}</span>
                     <div class="bar-pista">
                         <div class="bar-fill" style="width: ${ancho}%;"></div>
                     </div>
@@ -237,6 +171,7 @@
     // daltonismo, así que el texto es el canal que desambigua, nunca
     // el color solo.
     function nivelDesdePromedio(promedio) {
+        if (promedio === null) return { nombre: "S/D", clave: "nula", color: "var(--estado-nula)" };
         if (promedio >= 2.5) return { nombre: "Alta", clave: "alta", color: "var(--estado-alta)" };
         if (promedio >= 1.5) return { nombre: "Media", clave: "media", color: "var(--estado-media)" };
         if (promedio >= 0.5) return { nombre: "Baja", clave: "baja", color: "var(--estado-baja)" };
@@ -248,9 +183,10 @@
 
         cont.innerHTML = estacionalidad.map((m) => {
             const { nombre, clave, color } = nivelDesdePromedio(m.promedio);
+            const detalle = m.promedio === null ? "sin datos" : `producción ${nombre.toLowerCase()}`;
             return `
                 <div class="heatmap-celda">
-                    <div class="heatmap-color nivel-${clave}" style="background: ${color};" title="${m.mes}: producción ${nombre.toLowerCase()}">
+                    <div class="heatmap-color nivel-${clave}" style="background: ${color};" title="${m.mes}: ${detalle}">
                         <span class="heatmap-nivel">${nombre}</span>
                     </div>
                     <span class="heatmap-mes">${m.mes}</span>
@@ -278,55 +214,84 @@
         const cuerpo = document.getElementById("tabla-body");
         const subtitulo = document.getElementById("tabla-subtitulo");
 
-        subtitulo.textContent = `Detalle de los ${registros.length} relevamientos de ejemplo`;
+        subtitulo.textContent = `Detalle de los ${registros.length} relevamientos cargados`;
 
         cuerpo.innerHTML = registros.map((r) => `
             <tr>
-                <td>${r.nombre}</td>
-                <td>${r.localidad}</td>
-                <td>${r.tipo}</td>
+                <td>${esc(r.nombre)}</td>
+                <td>${esc(r.localidad)}</td>
+                <td>${esc(r.tipo)}</td>
                 <td class="col-numerica">${fmt(r.leche)}</td>
                 <td class="col-numerica"><span class="chip-estado ${r.generaSuero ? "si" : "no"}">${r.generaSuero ? "Sí" : "No"}</span></td>
-                <td class="col-numerica">${r.generaSuero ? fmt(r.suero) : "—"}</td>
-                <td>${r.interes}</td>
+                <td class="col-numerica">${r.generaSuero && r.suero !== null ? fmt(r.suero) : "—"}</td>
+                <td>${esc(r.interes)}</td>
             </tr>
         `).join("");
     }
 
-    function renderTimestamp() {
+    function renderVacio() {
+        ["bar-chart", "bar-productos", "heatmap-mensual", "frio-stats"].forEach((id) => {
+            document.getElementById(id).innerHTML = sinDatos;
+        });
+        document.getElementById("stacked-bar").innerHTML = "";
+        document.getElementById("leyenda-destino").innerHTML = "";
+        document.getElementById("destino-subtitulo").textContent = "Todavía no hay establecimientos que generen lactosuero";
+        document.getElementById("tabla-body").innerHTML = '<tr><td colspan="7">Todavía no hay relevamientos cargados.</td></tr>';
+        document.getElementById("tabla-subtitulo").textContent = "Detalle de los relevamientos";
+    }
+
+    function renderTimestamp(texto) {
         const el = document.getElementById("ultima-actualizacion");
-        const ahora = new Date();
-        const hora = ahora.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+        if (texto) {
+            el.textContent = texto;
+            return;
+        }
+
+        const hora = new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
         el.textContent = `Actualizado a las ${hora}`;
     }
 
+    // Con la base vacía no se dibujan los gráficos (evita divisiones por cero):
+    // se muestra un mensaje en cada tarjeta.
     function render(datos) {
         renderStats(datos.resumen);
-        renderBarChart(datos.registros);
-        renderDestinos(datos.destinos, datos.resumen.conSuero);
-        renderEstacionalidad(datos.estacionalidad);
-        renderProductos(datos.productos);
-        renderFrio(datos.frio);
-        renderTabla(datos.registros);
+
+        if (datos.registros.length === 0) {
+            renderVacio();
+        } else {
+            renderBarChart(datos.registros);
+            renderDestinos(datos.destinos, datos.resumen.conSuero);
+            renderEstacionalidad(datos.estacionalidad);
+            renderProductos(datos.productos);
+            renderFrio(datos.frio);
+            renderTabla(datos.registros);
+        }
+
         renderTimestamp();
     }
 
+    // Carga y dibuja los datos. Si el servidor no responde, avisa en el texto de
+    // "última actualización" en lugar de dejar la pantalla en blanco.
+    async function actualizar() {
+        try {
+            render(await cargarDatos());
+        } catch (error) {
+            renderTimestamp("No se pudieron cargar los datos. ¿Está activo el servidor?");
+        }
+    }
+
     function iniciar() {
-        render(generarDatos());
+        actualizar();
 
         const boton = document.getElementById("btn-recargar");
 
-        boton.addEventListener("click", () => {
+        boton.addEventListener("click", async () => {
             if (boton.classList.contains("cargando")) return;
 
             boton.classList.add("cargando");
-
-            // Simula el tiempo de ida y vuelta al cargar nuevas
-            // respuestas del relevamiento (uso en vivo, en campo).
-            window.setTimeout(() => {
-                render(generarDatos());
-                boton.classList.remove("cargando");
-            }, 700);
+            await actualizar();
+            boton.classList.remove("cargando");
         });
     }
 

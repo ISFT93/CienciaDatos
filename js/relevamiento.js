@@ -1,14 +1,23 @@
 /* =========================================
    RELEVAMIENTO — WIZARD MULTI-PASO
-   (sin guardado, sin backend: solo interacción
-   en el navegador para mostrar el diseño)
+   Las opciones (tipo, localidad, productos y
+   destinos) se cargan desde api/catalogos_relevamiento.php y
+   el envío se guarda con api/guardar_relevamiento.php.
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
     const form = document.getElementById("form-relevamiento");
 
     if (!form) return;
+
+    // Las opciones deben existir antes de inicializar chips, "Otro" y porcentajes.
+    try {
+        await cargarCatalogos();
+    } catch (error) {
+        mostrarErrorFormulario(form, "No se pudieron cargar las opciones del formulario. Verificá que el servidor esté activo y recargá la página.");
+        return;
+    }
 
     const TOTAL_PASOS = form.querySelectorAll(".form-paso").length;
     let pasoActual = 1;
@@ -71,13 +80,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     elementosNav.btnLimpiar.addEventListener("click", reiniciarFormulario);
 
-    form.addEventListener("submit", (evento) => {
+    form.addEventListener("submit", async (evento) => {
 
         evento.preventDefault();
 
         if (!validarPaso(form, TOTAL_PASOS)) return;
 
-        mostrarModalEnvio(reiniciarFormulario);
+        elementosNav.btnFinalizar.disabled = true;
+        mostrarErrorFormulario(form, "");
+
+        try {
+            await enviarRelevamiento(armarPayload(form));
+            mostrarModalEnvio(reiniciarFormulario);
+        } catch (error) {
+            mostrarErrorFormulario(form, error.message);
+        } finally {
+            elementosNav.btnFinalizar.disabled = false;
+        }
     });
 
     document.getElementById("wizard-pasos").addEventListener("click", (evento) => {
@@ -94,6 +113,205 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+/* =========================================
+   CATÁLOGOS (desde la base de datos)
+========================================= */
+
+// Crea un elemento del DOM. El texto se asigna con textContent (no innerHTML),
+// así los nombres que vienen de la base nunca se interpretan como HTML.
+function crearElemento(etiqueta, atributos = {}, texto = "") {
+
+    const el = document.createElement(etiqueta);
+
+    Object.entries(atributos).forEach(([clave, valor]) => el.setAttribute(clave, valor));
+
+    if (texto) el.textContent = texto;
+
+    return el;
+}
+
+// Pide a api/catalogos_relevamiento.php las opciones guardadas en la base y arma con ellas
+// los selects, chips y destinos. Para agregar o quitar una opción se edita la
+// tabla correspondiente en MySQL: no hace falta tocar el HTML ni este archivo.
+async function cargarCatalogos() {
+
+    const respuesta = await fetch("api/catalogos_relevamiento.php");
+
+    if (!respuesta.ok) throw new Error("Catálogos no disponibles");
+
+    const catalogos = await respuesta.json();
+
+    llenarSelect("tipo-establecimiento", catalogos.tipos);
+    llenarSelect("localidad", catalogos.localidades, { idOtro: "otro-localidad" });
+    llenarProductos(catalogos.productos);
+    llenarDestinos(catalogos.destinos);
+}
+
+// Agrega un <option> por cada fila del catálogo (value = codigo, texto = nombre).
+// Si se pasa idOtro, suma al final la opción "Otro", que habilita el input de
+// texto con ese id (lo gestiona inicializarCamposOtro).
+function llenarSelect(idSelect, opciones, { idOtro } = {}) {
+
+    const select = document.getElementById(idSelect);
+
+    opciones.forEach(({ codigo, nombre }) => {
+        select.appendChild(crearElemento("option", { value: codigo }, nombre));
+    });
+
+    if (idOtro) {
+        select.appendChild(crearElemento("option", { value: "otro", "data-otro-toggle": idOtro }, "Otro"));
+    }
+}
+
+function crearChip(valor, etiqueta, atributosInput = {}, claseExtra = "") {
+
+    const chip = crearElemento("label", { class: `chip ${claseExtra}`.trim() });
+
+    chip.appendChild(crearElemento("input", { type: "checkbox", name: "productos", value: valor, ...atributosInput }));
+    chip.appendChild(crearElemento("span", {}, etiqueta));
+
+    return chip;
+}
+
+// Genera un chip (checkbox) por producto lácteo, más el chip "Otros" que
+// habilita el campo de texto libre.
+function llenarProductos(productos) {
+
+    const contenedor = document.getElementById("opciones-productos");
+
+    productos.forEach(({ codigo, nombre }) => {
+        contenedor.appendChild(crearChip(codigo, nombre));
+    });
+
+    contenedor.appendChild(crearChip("otros", "Otros", { "data-otro-toggle": "otro-productos" }, "chip-otro"));
+}
+
+// Genera una fila por destino del lactosuero: un checkbox que habilita su input
+// de porcentaje. data-destino guarda el codigo, que armarPayload usa como clave.
+function llenarDestinos(destinos) {
+
+    const contenedor = document.getElementById("porcentajes-destinos");
+
+    destinos.forEach(({ codigo, nombre }) => {
+
+        const item = crearElemento("label", { class: "porcentaje-item" });
+
+        const check = crearElemento("span", { class: "porcentaje-check" });
+        check.appendChild(crearElemento("input", {
+            type: "checkbox",
+            id: `dest-${codigo}`,
+            "data-porcentaje-toggle": `porcentaje-${codigo}`,
+        }));
+        check.appendChild(document.createTextNode(` ${nombre}`));
+
+        const entrada = crearElemento("span", { class: "porcentaje-input" });
+        entrada.appendChild(crearElemento("input", {
+            type: "number",
+            id: `porcentaje-${codigo}`,
+            name: `porcentaje_${codigo}`,
+            "data-destino": codigo,
+            min: "0",
+            max: "100",
+            placeholder: "%",
+            disabled: "",
+        }));
+        entrada.appendChild(crearElemento("span", { class: "unidad" }, "%"));
+
+        item.appendChild(check);
+        item.appendChild(entrada);
+        contenedor.appendChild(item);
+    });
+}
+
+
+/* =========================================
+   ENVÍO AL SERVIDOR
+========================================= */
+
+// Convierte el formulario en el objeto que espera api/guardar_relevamiento.php.
+// Tipo, localidad, productos y destinos viajan por su "codigo"; el servidor lo
+// traduce al id de la tabla. Solo se envían los destinos tildados con porcentaje
+// y los meses que tienen un nivel elegido.
+function armarPayload(form) {
+
+    const valor = (nombre) => form.elements[nombre].value;
+    const marcado = form.querySelector('[name="genera_lactosuero"]:checked');
+
+    const destinos = {};
+    form.querySelectorAll("[data-porcentaje-toggle]:checked").forEach((checkbox) => {
+        const input = document.getElementById(checkbox.dataset.porcentajeToggle);
+        if (input.value !== "") destinos[input.dataset.destino] = input.value;
+    });
+
+    const estacionalidad = {};
+    form.querySelectorAll("input[data-mes]:checked").forEach((radio) => {
+        estacionalidad[radio.dataset.mes] = radio.value;
+    });
+
+    const productos = Array.from(form.querySelectorAll('input[name="productos"]:checked'))
+        .map((checkbox) => checkbox.value)
+        .filter((codigo) => codigo !== "otros");
+
+    return {
+        nombre_establecimiento: valor("nombre_establecimiento"),
+        tipo: valor("tipo_establecimiento"),
+        localidad: valor("localidad"),
+        localidad_otro: valor("localidad_otro"),
+        direccion: valor("direccion"),
+        coordenadas: valor("coordenadas"),
+        litros_leche_dia: valor("litros_leche_dia"),
+        dias_produccion: valor("dias_produccion"),
+        productos,
+        productos_otro: valor("productos_otro"),
+        genera_lactosuero: marcado ? marcado.value : null,
+        litros_suero_dia: valor("litros_suero_dia"),
+        destinos,
+        estacionalidad,
+        almacenamiento_frio: valor("almacenamiento_frio"),
+        litros_frio: valor("litros_frio"),
+        interes_alternativas: valor("interes_alternativas"),
+    };
+}
+
+// Envía el relevamiento por POST (JSON). Si el servidor lo rechaza o no responde,
+// lanza un Error con un mensaje legible que el submit muestra en el formulario.
+async function enviarRelevamiento(payload) {
+
+    let respuesta;
+
+    try {
+        respuesta = await fetch("api/guardar_relevamiento.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+    } catch (error) {
+        throw new Error("No se pudo conectar con el servidor. Probá de nuevo.");
+    }
+
+    const resultado = await respuesta.json().catch(() => null);
+
+    if (!respuesta.ok || !resultado || !resultado.ok) {
+        throw new Error((resultado && resultado.error) || "No se pudo guardar el relevamiento.");
+    }
+}
+
+// Muestra (o limpia, con mensaje vacío) un error general encima de los botones
+// de navegación, para fallos de carga o de envío que no son de un campo puntual.
+function mostrarErrorFormulario(form, mensaje) {
+
+    let error = document.getElementById("error-envio");
+
+    if (!error) {
+        error = crearElemento("span", { id: "error-envio", class: "mensaje-error" });
+        form.insertBefore(error, form.querySelector(".wizard-nav"));
+    }
+
+    error.textContent = mensaje;
+    error.hidden = mensaje === "";
+}
 
 
 /* =========================================
@@ -324,10 +542,10 @@ function generarTablaEstacionalidad() {
         { valor: "alta", etiqueta: "Alta" },
         { valor: "media", etiqueta: "Media" },
         { valor: "baja", etiqueta: "Baja" },
-        { valor: "no", etiqueta: "No produce" },
+        { valor: "no_produce", etiqueta: "No produce" },
     ];
 
-    meses.forEach(({ nombre: mes, slug }) => {
+    meses.forEach(({ nombre: mes, slug }, indice) => {
 
         const nombreCampo = `estacionalidad_${slug}`;
 
@@ -346,6 +564,8 @@ function generarTablaEstacionalidad() {
             input.type = "radio";
             input.name = nombreCampo;
             input.value = nivel.valor;
+            // Número de mes (1-12): es la clave con la que se guarda en la base.
+            input.dataset.mes = indice + 1;
             input.setAttribute("aria-label", `${mes} - ${nivel.etiqueta}`);
 
             celda.appendChild(input);
