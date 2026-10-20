@@ -801,16 +801,19 @@ h1 span {
     font-size: 13px;
 }
 
-.proyecto button {
+.proyecto button,
+.proyecto-btn {
     background: transparent;
     border: none;
     color: var(--blanco);
     cursor: pointer;
     font-size: 10px;
     letter-spacing: 1px;
+    text-decoration: none;
 }
 
-.proyecto button:hover {
+.proyecto button:hover,
+.proyecto-btn:hover {
     color: var(--azul);
 }
 
@@ -1420,7 +1423,8 @@ h1 span {
         gap: 15px;
     }
 
-    .proyecto button {
+    .proyecto button,
+    .proyecto-btn {
         text-align: left;
     }
 

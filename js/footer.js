@@ -34,7 +34,8 @@ const PAGINAS = [
     { nombre: "Alumnos",     url: "alumnos.php" },
     { nombre: "Proyectos",   url: "proyectos.html" },
     { nombre: "Información", url: "informacion.html" },
-    { nombre: "Consultas",   url: "consultas.php" }
+    { nombre: "Consultas",   url: "consultas.php" },
+    { nombre: "Administrador",   url: "login.php" }
 ];
 
 
@@ -137,3 +138,5 @@ function crearFooter() {
 }
 
 crearFooter();
+
+
